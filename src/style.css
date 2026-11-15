@@ -68,6 +68,78 @@ main {
   padding: 24px 16px 48px;
 }
 
+button {
+  padding: 8px 16px;
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius);
+  background: var(--color-background);
+  color: var(--color-accent);
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--color-surface);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+#sign-out {
+  margin: 8px 12px;
+  vertical-align: middle;
+}
+
+.login-card {
+  max-width: 560px;
+  margin: 24px auto;
+  padding: clamp(20px, 5vw, 40px);
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.login-eyebrow {
+  margin: 0;
+  color: var(--color-accent);
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.login-card h1 {
+  margin: 8px 0 16px;
+  font-size: clamp(28px, 6vw, 40px);
+}
+
+.google-sign-in {
+  margin: 24px 0;
+}
+
+.google-sign-in:empty {
+  display: none;
+}
+
+.login-setup {
+  margin-top: 24px;
+}
+
+.login-setup summary {
+  color: var(--color-accent);
+  cursor: pointer;
+}
+
+.login-note {
+  margin: 24px 0 0;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
 body[data-view='midway'] {
   display: flex;
   flex-direction: column;
