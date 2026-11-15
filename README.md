@@ -107,7 +107,12 @@ npm ci
 npm run dev
 ```
 
-Then open http://localhost:5173.
+Then open http://localhost:5173. This fork requires Google sign-in before the
+midway or games open. The owner must first follow
+[Google sign-in setup](docs/google-sign-in.md) and add a public Google Web Client
+ID to `public/auth-config.json`. Until then, the site shows setup help instead
+of starting a game. GitHub Pages assets remain public; this is not server-side
+access control.
 
 **Can't run it on your laptop?** Open your fork in GitHub Codespaces instead:
 on your fork's page, select **Code → Codespaces → Create codespace on main**. It

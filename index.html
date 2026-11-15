@@ -36,8 +36,12 @@
   <body>
     <header class="awning">
       <a class="brand" href="#/">Tessl Carnival</a>
+      <button id="sign-out" type="button" hidden>Sign out</button>
     </header>
-    <main id="app"></main>
+    <main id="app">
+      <p role="status">Loading sign-in…</p>
+      <noscript>Enable JavaScript to sign in with Google and play the carnival.</noscript>
+    </main>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -4,11 +4,15 @@ import { registry } from './games';
 import { startMidway } from './midway/midway';
 import type { BoothSlot } from './midway/world';
 import { carnivalLink, REPO_URL, shareLinks } from './share';
+import { GoogleAuth } from './auth/google';
+import { renderLogin } from './auth/login';
 
 applyTheme();
 
 const app = document.querySelector<HTMLElement>('#app')!;
+const signOut = document.querySelector<HTMLButtonElement>('#sign-out')!;
 let stop: (() => void) | undefined;
+const auth = new GoogleAuth(route);
 
 function bestText(game: CarnivalGame): string {
   const best = bestScore(game.id);
@@ -105,8 +109,14 @@ function renderGame(game: CarnivalGame) {
 }
 
 function route() {
+  if (auth.checkExpiry()) return;
   stop?.();
   stop = undefined;
+  signOut.hidden = auth.state.status !== 'signed-in';
+  if (auth.state.status !== 'signed-in') {
+    stop = renderLogin(app, auth);
+    return;
+  }
 
   const match = location.hash.match(/^#\/play\/([\w-]+)$/);
   const game = match ? registry.get(match[1]) : undefined;
@@ -115,4 +125,22 @@ function route() {
 }
 
 window.addEventListener('hashchange', route);
-route();
+const checkExpiry = () => auth.checkExpiry();
+const logout = () => auth.signOut();
+window.addEventListener('focus', checkExpiry);
+window.addEventListener('pageshow', checkExpiry);
+document.addEventListener('visibilitychange', checkExpiry);
+signOut.addEventListener('click', logout);
+void auth.start();
+
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
+    stop?.();
+    auth.dispose();
+    window.removeEventListener('hashchange', route);
+    window.removeEventListener('focus', checkExpiry);
+    window.removeEventListener('pageshow', checkExpiry);
+    document.removeEventListener('visibilitychange', checkExpiry);
+    signOut.removeEventListener('click', logout);
+  });
+}
